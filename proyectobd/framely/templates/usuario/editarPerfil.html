@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     {# Cargamos la librería #}
+     {% load bootstrap4 %}
+
+      {# CSS Bootstrap #}
+ {% bootstrap_css %}
+
+ {# Widget Tweaks #}
+ {% load widget_tweaks %}
+
+ {# Archivos #}
+ {% load static %} <!-- STATIC_URL -->
+
+ <style>
+     body {
+         background-color: #333333;
+     }
+     
+     h1 {
+         color: #ffffff;
+     }
+     label {
+        color: #ffffff;
+    }
+    p{
+        color: #ffffff;
+    }
+   
+ </style>
+ <head>
+    <body>
+    <div class="container" style="padding: 30px; border-radius: 10px;">
+        <h1 class="text-center mb-4">Actualizar Usuario</h1>
+
+        <form method="post" enctype="multipart/form-data">
+
+            <!-- Pasamos el 'csrf_token' de seguridad para poder crear un nuevo registro -->
+            {% csrf_token %}
+            
+            <!-- Importamos la biblioteca 'widget_tweaks' -->
+            {% load widget_tweaks %}
+            
+                <div class="form-group">
+                    <label for="username">Nombre de usuario:</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.email.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                
+                <div class="form-group">
+                    <label for="cel">Celular:</label>
+                    {{ form.cel }}
+                    {% if form.cel.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.cel.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                
+                <div class="form-group">
+                    <label for="foto_perfil" class="txt_negrita">Foto de Perfil:</label>
+                    {{ form.foto_perfil|add_class:"form-control-file"|attr:"accept:image/*"}} 
+                </div>
+
+    
+                </div>
+                <p>
+
+            <p>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary mr-3">Aceptar</button>
+                <a href="../" type="submit" class="btn btn-secondary">Volver</a>
+            </div>
+        </form>
+        {# JS y jQuery Bootstrap #}
+        {% bootstrap_javascript jquery='full' %}
+        
+    </div>
+</body>
+<html>

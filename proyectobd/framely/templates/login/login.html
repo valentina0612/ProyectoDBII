@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {# Cargamos la librería #}
+  {% load bootstrap4 %}
+
+  {# CSS Bootstrap #}
+  {% bootstrap_css %}
+
+  {# Widget Tweaks #}
+  {% load widget_tweaks %}
+
+  {# Archivos #}
+  {% load static %} <!-- STATIC_URL -->
+  <title>Login</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: white;
+      border-color:#83A603;
+    }
+    .container {
+      margin-top: 200px;
+      max-width: 400px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      border: 2px solid #83A603;
+      
+    }
+    .btn {
+      background-color: #83A603;
+      color: white;
+      width: 100%;
+    }
+    .login-icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      width: 40px; 
+      height: 40px; 
+    }
+    .login_icon2{
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 20px;
+      width: 50px; 
+      height: 50px; 
+
+    }
+    .header {
+      background-color: #FFFFFF;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      color: #3E5902;
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      .navbar-brand {
+          font-size: 1.5rem;
+          padding-top: .25rem;
+          padding-bottom: .25rem;
+      }
+    }
+      
+      .navbar-nav > .nav-item {
+          margin-right: 0;
+      }
+
+</style>
+</head>
+<body> 
+
+
+  <header>     
+    <nav class="navbar navbar-expand-lg" style="background-color: #3E5902;">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt=".login_icon2" class="login_icon2" />
+          <a class="navbar-brand" href="#" style="color: white;">SaludablementeDelicioso</a>
+        </div>
+        <a class="nav-link ml-auto" href="../usuarios/crear" style="color: white; margin-right: 20px; position: relative; right: 0;">Registrarse</a>
+        
+      </div>
+    </nav>
+    
+</header>
+
+
+<div class="container">
+  <div class="d-flex align-items-center mb-4">
+    <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt="Login Icon" class="login-icon">
+    <h2 class="mb-0">Iniciar sesión</h2>
+  </div>
+  {% block content %}
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="form-group">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Recordar contraseña</label>
+        </div>
+        <a href="" class="forgot-password">¿Olvidaste tu contraseña?</a>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">
+        Iniciar sesión
+      </button>
+      <a href="../usuarios" class="btn btn-secondary mt-2">Volver</a>
+    </form>
+  {% endblock content %}
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

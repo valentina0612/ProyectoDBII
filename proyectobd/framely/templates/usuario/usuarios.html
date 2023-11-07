@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {# Cargamos la librería #}
+    {% load bootstrap4 %}
+
+    {# CSS Bootstrap #}
+    {% bootstrap_css %}
+
+    {# Widget Tweaks #}
+    {% load widget_tweaks %}
+
+    {# Archivos #}
+    {% load static %} <!-- STATIC_URL -->
+
+    <meta charset="UTF-8">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    
+   
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Saludablemente delicioso</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../principalAdmi">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../comida">Comida</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pedido">Pedidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../descuentoCategoria">Descuento Categoria</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../descuentoProducto/">Descuento Producto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../administrador/informacionVenta">Ventas</a>
+                    </li>
+                    
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<!-- Contenido principal -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Menú de navegación lateral -->
+            <div class="list-group">
+                <br>
+                <br>
+                <a href="#" class="list-group-item active">Opciones de administración</a>
+                <a href="crear" type="button" class="list-group-item"></i> Crear usuario</a>
+                 <!-- <a href="detalles" class="list-group-item">detalles del plato</a>
+                <a href="eliminar" class="list-group-item">Eliminar plato</a>
+                <a href="actualizar" class="list-group-item">Actualizar plato</a>-->
+                <a href="../usuario/cumple" class="list-group-item">Ordenar por Cumpleaños</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            {% csrf_token %}
+            <br>
+            <p>Bienvenido {{ usuarioLogueado.user.username }}</p>
+            <a class="nav-item nav-link" href="../logout" style="color: rgb(125, 50, 50);">Cerrar Sesión</a>
+            <h1 class="mb-4">Listado de usuario</h1>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Usuario</th>
+            
+
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{usuario.user.username}}</td>
+                    
+
+                    <td>
+                        <div class="btn-group">
+                            <a href="detalle/{{usuario.id}}" class="btn btn-primary btn-sm" title="Ver"><i class="fas fa-eye"></i>Detalle</a>
+                        </div>
+                        {% if usuario.user not in siguiendo %}
+                        <form method="POST" action="seguir/{{usuario.id}}" class="d-inline-block">
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="return follow();" type="submit">
+                                Seguir
+                            </button>
+                        {% csrf_token %} 
+                    </form>
+                    {% elif usuario.user in siguiendo  %}
+                    <form method="POST" action="unfollow/{{usuario.id}}" class="d-inline-block">
+                        {% csrf_token %}
+                        <div class="btn-group">
+                            <button class="btn btn-danger" onclick="return unfollow();" type="submit">
+                                Dejar de seguir
+                            </button>
+                        </div>
+                    </form>
+                    {% endif %}
+                        </div>
+                    </td>
+                    
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+         {# JS y jQuery Bootstrap #}
+  {% bootstrap_javascript jquery='full' %} 
+
+
+           
+        </div>
+        
+    </div>
+</div>

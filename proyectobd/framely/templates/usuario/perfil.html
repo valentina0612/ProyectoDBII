@@ -1,0 +1,41 @@
+<head>
+
+    {# Cargamos la librería #} 
+    {% load bootstrap4 %} 
+  
+    {# CSS Bootstrap #} 
+    {% bootstrap_css %} </head>
+    
+    {# Widget Tweaks #}
+    {% load widget_tweaks %}
+  
+    {# Archivos #}
+    {% load static %} <!-- STATIC_URL -->
+  
+  </head>
+  <body style="background-color: #333; color: #fff; text-align: center;">
+    <div class="container mt-5">
+  
+  <h4>Detalles</h4>
+  <br>
+
+    <p><span class="txt_negrita">Usuario:</span> <br> {{object.username}}</p>
+    <p><span class="txt_negrita">Nacimiento:</span> <br> {{object.fecha_nacimiento}}</p>
+    <p><span class="txt_negrita">Seguidores:</span> <br> {{object.followers}}</p>
+    <p><span class="txt_negrita">Siguiendo:</span> <br> {{object.following}}</p>
+    <p><span class="txt_negrita">Usuario desde:</span> <br> {{object.created}}</p>
+    <p><span class="txt_negrita">Imagen:</span> <br> <img src="{{object.foto_perfil.url}}" alt="{{object.username}}" width="200px"></p>
+  
+    <!-- Botón para volver a la vista principal (Home) -->
+    <a href="../" type="submit" class="btn btn-primary">Volver</a>
+  
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+    {# JS y jQuery Bootstrap #}
+    {% bootstrap_javascript jquery='full' %} 
+  </body>
+  

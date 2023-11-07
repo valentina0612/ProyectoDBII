@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {# Cargamos la librería #}
+  {% load bootstrap4 %}
+
+  {# CSS Bootstrap #}
+  {% bootstrap_css %}
+
+  {# Widget Tweaks #}
+  {% load widget_tweaks %}
+
+  {# Archivos #}
+  {% load static %} <!-- STATIC_URL -->
+  <title>Registro</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: white;
+      border-color:#83A603;
+    }
+    .container {
+      margin-top: 10px;
+      max-width: 500px;
+      padding: 20px;
+      height: 676px; 
+      background-color: #fff;
+      border-radius: 5px;
+      border: 2px solid #83A603;
+      
+    }
+    
+    .btn {
+      background-color: #83A603;
+      color: white;
+      width: 100%;
+    }
+    .login-icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      width: 40px; 
+      height: 40px; 
+    }
+    .login_icon2{
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 20px;
+      width: 50px; 
+      height: 50px; 
+
+    }
+    .header {
+      background-color: #FFFFFF;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      color: #3E5902;
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      .navbar-brand {
+          font-size: 1.5rem;
+          padding-top: .25rem;
+          padding-bottom: .25rem;
+      }
+    }
+      .navbar-nav > .nav-item {
+          margin-right: 0;
+      }
+      .my-input {
+        font-size: 16px;
+        padding: 8px 16px;
+        width: 400px;
+        display: block;
+        margin: 0 auto;
+
+    }
+
+    .my-link {
+        font-size: 16px;
+        padding: 8px 16px;
+        width: 400px;
+        display: block;
+        margin: 0 auto;
+
+    }
+  
+    
+   
+  </style>
+</head>
+
+    
+  <header a>     
+    <nav class="navbar navbar-expand-lg" style="background-color: #3E5902;">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt=".login_icon2" class="login_icon2" />
+          <a class="navbar-brand" href="#" style="color: white;">SaludablementeDelicioso</a>
+        </div>
+            <a class="nav-link ml-auto" href="../usuario/login" style="color: white; margin-right: 20px; position: relative; right: 0;">Iniciar Sesion</a>
+       </div>
+    </nav>
+    
+    
+</header>
+<br>
+<h2 class="text-center mb-4" style="color: black; font-size: 20px;">CREAR USUARIO</h2>
+ </style>
+ 
+    <body>
+        <div class="container">
+            <div class="d-flex align-items-center mb-4">
+        <form method="post">
+            <p>Ingresa la siguiente información:</p>
+            <br>
+
+            <!-- Pasamos el 'csrf_token' de seguridad para poder crear un nuevo registro -->
+            {% csrf_token %}
+            
+            
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="username">Nombre de usuario:</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.email.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="first_name">Nombre:</label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.first_name.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="last_name">Apellido:</label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.last_name.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="password1">Contraseña:</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password1.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="password2">Confirmar contraseña:</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password2.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="cel">Celular:</label>
+                    {{ form.cel }}
+                    {% if form.cel.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.cel.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                
+                
+                <div class="form-group">
+                    <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+                    {{ form.fecha_nacimiento|attr:'type:date' }}
+                    {% if form.fecha_nacimiento.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.fecha_nacimiento.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                
+                <div class="form-group">
+                    <input type="submit" value="Registrarse" class="btn btn-primary mt-3 my-input">
+                    <a href="../usuarios" class="btn btn-secondary mt-2 my-link">Volver</a>
+                </div>
+            </form>
+        {# JS y jQuery Bootstrap #}
+        {% bootstrap_javascript jquery='full' %}
+        
+    </div>
+</body>
+<html>

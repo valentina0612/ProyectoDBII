@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     {# Cargamos la librería #}
+     {% load bootstrap4 %}
+
+      {# CSS Bootstrap #}
+ {% bootstrap_css %}
+
+ {# Widget Tweaks #}
+ {% load widget_tweaks %}
+
+ {# Archivos #}
+ {% load static %} <!-- STATIC_URL -->
+
+ <style>
+     body {
+         background-color: #333333;
+     }
+     
+     h1 {
+         color: #ffffff;
+     }
+     label {
+        color: #ffffff;
+    }
+ </style>
+ <head>
+    <body>
+    <div class="container" style="padding: 30px; border-radius: 10px;">
+        <h1 class="text-center mb-4">Crear post</h1>
+
+        <form method="post" enctype="multipart/form-data">
+
+            <!-- Pasamos el 'csrf_token' de seguridad para poder crear un nuevo registro -->
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="descripcion" class="txt_negrita">Descripcion:</label>
+                {{ form.descripcion|add_class:"form-control" }}
+            </div>
+
+            <div class="form-group">
+                <label for="foto_video" class="txt_negrita">Imagen:</label>
+                {{ form.foto_video|add_class:"form-control-file"|attr:"accept:file/*"}} 
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary mr-3">Aceptar</button>
+                <a href="../" type="submit" class="btn btn-secondary">Cancelar</a>
+            </div>
+
+        </form>
+        {# JS y jQuery Bootstrap #}
+        {% bootstrap_javascript jquery='full' %}
+        
+    </div>
+</body>
+<html>
