@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   {# Cargamos la librería #}
   {% load bootstrap4 %}
@@ -12,106 +13,86 @@
 
   {# Archivos #}
   {% load static %} <!-- STATIC_URL -->
-  <title>Login</title>
+  <title>Framely</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
+  <link rel="shortcut icon" href="../../../media/icono/feliz.png" type="image/x-icon">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cookie&family=League+Spartan:wght@300&display=swap');
+
+    :root {
+      --purple: #7930ad;
+      --dark-x: #431c5f;
+      --light: #ffffff;
+    }
+
     body {
-      background-color: white;
-      border-color:#83A603;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 300;
+      color: var(--light);
+      overflow: hidden;
     }
-    .container {
-      margin-top: 200px;
-      max-width: 400px;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 5px;
-      border: 2px solid #83A603;
-      
+
+    .bg-purple {
+      background-color: var(--purple) !important;
     }
+
+    .bg-dark-x {
+      background-color: var(--dark-x);
+    }
+
+    .form-control,
     .btn {
-      background-color: #83A603;
-      color: white;
-      width: 100%;
+      min-height: 3.125rem;
+      line-height: initial;
     }
-    .login-icon {
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 10px;
-      width: 40px; 
-      height: 40px; 
-    }
-    .login_icon2{
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 20px;
-      width: 50px; 
-      height: 50px; 
 
+    .img-1 {
+      background-image: url(../../../media/icono/happymorado.png);
+      background-size: cover;
+      background-position: center;
     }
-    .header {
-      background-color: #FFFFFF;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .header h1 {
-      color: #3E5902;
-      margin: 0;
-    }
-    @media (max-width: 768px) {
-      .navbar-brand {
-          font-size: 1.5rem;
-          padding-top: .25rem;
-          padding-bottom: .25rem;
-      }
-    }
-      
-      .navbar-nav > .nav-item {
-          margin-right: 0;
-      }
-
-</style>
+  </style>
 </head>
-<body> 
 
-
-  <header>     
-    <nav class="navbar navbar-expand-lg" style="background-color: #3E5902;">
-      <div class="d-flex align-items-center justify-content-between mb-4">
-        <div class="d-flex align-items-center">
-          <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt=".login_icon2" class="login_icon2" />
-          <a class="navbar-brand" href="#" style="color: white;">SaludablementeDelicioso</a>
-        </div>
-        <a class="nav-link ml-auto" href="../usuarios/crear" style="color: white; margin-right: 20px; position: relative; right: 0;">Registrarse</a>
-        
+<body class="bg-purple">
+  <section>
+    <div class="row g-0">
+      <div class="col-lg-7 d-none d-lg-block">
+        <div class="img-1 min-vh-100"></div>
       </div>
-    </nav>
-    
-</header>
-
-
-<div class="container">
-  <div class="d-flex align-items-center mb-4">
-    <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt="Login Icon" class="login-icon">
-    <h2 class="mb-0">Iniciar sesión</h2>
-  </div>
-  {% block content %}
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <div class="form-group">
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="rememberMe">
-          <label class="form-check-label" for="rememberMe">Recordar contraseña</label>
+      <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
+        <div class="px-lg-5 pt-lg-4 pb-lg-2 p-4 w-100 mb-auto d-flex justify-content-center">
+          <h1 class="font-weight-bold mb-4 align-self-center">Framely</h1>
         </div>
-        <a href="" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        <div class="px-lg-5 py-lg-4 p-4 w-100 align-self-center">
+          <h5>¡Hola de nuevo! Inicia sesión para explorar, descubrir y conectarte con la comunidad que
+            te espera.</h5>
+          {% block content %}
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="form-label font-weight-bold">Usuario</label>
+              {{ form.username |add_class:'form-control bg-dark-x border-0' |attr:"placeholder:Ingresa tu usuario"}}
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1" class="form-label font-weight-bold">Contraseña</label>
+              {{ form.password |add_class:'form-control bg-dark-x border-0' |attr:"placeholder:Ingresa tu contraseña"}}
+            </div>
+            <button type="submit" class="btn btn-primary font-weight-bold w-100">Iniciar Sesión</button>
+          </form>
+          {% endblock content %}
+        </div>
+        <div class="text-center px-lg-5 p-4 w-100 mt-auto">
+          <p class="d-inline-block mb-0">¿Todavía no tienes una cuenta?<a href="/usuarios/crear"
+              class="ml-2 text-decoration-none text-light font-weight-bold">Crea
+              una ahora</a></p>
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary mt-3">
-        Iniciar sesión
-      </button>
-      <a href="../usuarios" class="btn btn-secondary mt-2">Volver</a>
-    </form>
-  {% endblock content %}
-</div>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </div>
+  </section>
+  {# JS y jQuery Bootstrap #}
+  {% bootstrap_javascript jquery='full' %}
 </body>
+
 </html>

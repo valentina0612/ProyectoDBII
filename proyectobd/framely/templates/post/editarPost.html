@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {# Cargamos la librería #}
+    {% load bootstrap4 %}
+
+    {# CSS Bootstrap #}
+    {% bootstrap_css %}
+
+    {# Widget Tweaks #}
+    {% load widget_tweaks %}
+
+    {# Archivos #}
+    {% load static %} <!-- STATIC_URL -->
+
+    <meta charset="UTF-8">
+    <title>Editar Posts · {{ usuarioLogueado.user.username }}</title>
+    <link rel="shortcut icon" href="../../../media/icono/feliz.png" type="image/x-icon">
+
+
+    <style>
+        .container {
+            justify-content: center;
+        }
+        
+    </style>
+
+    <head>
+
+    <body>
+        <div class="container d-flex mt-5">
+            <div class="col-lg-6 justify-content-center">
+                <h1 class="text-center mb-4">Editar post</h1>
+                <form class="was-validated" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.descripcion|add_class:"form-control"| attr:"rows:3"|attr:"placeholder:Escribir una descripción..."}}
+                        <div class="invalid-feedback">No se ha puesto una descripción válida</div>
+                    </div>
+                    <div class="custom-file ">
+                        {{ form.foto_video|add_class:"custom-file-input"|attr:"accept:file/*"|attr:'required'}}
+                        <label class="custom-file-label" for="validatedCustomFile">Elegir archivo...</label>
+                        <div class="invalid-feedback">No se ha seleccionado ningún archivo</div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" class="btn btn-primary mr-3">Editar</button>
+                        <a href="../usuarios" type="submit" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+                {# JS y jQuery Bootstrap #}
+                {% bootstrap_javascript jquery='full' %}
+            </div>
+        </div>
+    </body>
+    <html>
