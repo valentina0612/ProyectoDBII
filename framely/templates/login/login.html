@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {# Cargamos la librería #}
+  {% load bootstrap4 %}
+
+  {# CSS Bootstrap #}
+  {% bootstrap_css %}
+
+  {# Widget Tweaks #}
+  {% load widget_tweaks %}
+
+  {# Archivos #}
+  {% load static %} <!-- STATIC_URL -->
+  <title>Framely</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
+  <link rel="shortcut icon" href="../../../media/icono/feliz.png" type="image/x-icon">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cookie&family=League+Spartan:wght@300&display=swap');
+
+    :root {
+      --purple: #7930ad;
+      --dark-x: #431c5f;
+      --light: #ffffff;
+    }
+
+    body {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 300;
+      color: var(--light);
+      overflow: hidden;
+    }
+
+    .bg-purple {
+      background-color: var(--purple) !important;
+    }
+
+    .bg-dark-x {
+      background-color: var(--dark-x);
+    }
+
+    .form-control,
+    .btn {
+      min-height: 3.125rem;
+      line-height: initial;
+    }
+
+    .img-1 {
+      background-image: url(../../../media/icono/happymorado.png);
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+
+<body class="bg-purple">
+  <section>
+    <div class="row g-0">
+      <div class="col-lg-7 d-none d-lg-block">
+        <div class="img-1 min-vh-100"></div>
+      </div>
+      <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
+        <div class="px-lg-5 pt-lg-4 pb-lg-2 p-4 w-100 mb-auto d-flex justify-content-center">
+          <h1 class="font-weight-bold mb-4 align-self-center">Framely</h1>
+        </div>
+        <div class="px-lg-5 py-lg-4 p-4 w-100 align-self-center">
+          <h5>¡Hola de nuevo! Inicia sesión para explorar, descubrir y conectarte con la comunidad que
+            te espera.</h5>
+          {% block content %}
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="form-label font-weight-bold">Usuario</label>
+              {{ form.username |add_class:'form-control bg-dark-x border-0' |attr:"placeholder:Ingresa tu usuario"}}
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1" class="form-label font-weight-bold">Contraseña</label>
+              {{ form.password |add_class:'form-control bg-dark-x border-0' |attr:"placeholder:Ingresa tu contraseña"}}
+            </div>
+            <button type="submit" class="btn btn-primary font-weight-bold w-100">Iniciar Sesión</button>
+          </form>
+          {% endblock content %}
+        </div>
+        <div class="text-center px-lg-5 p-4 w-100 mt-auto">
+          <p class="d-inline-block mb-0">¿Todavía no tienes una cuenta?<a href="/usuarios/crear"
+              class="ml-2 text-decoration-none text-light font-weight-bold">Crea
+              una ahora</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  {# JS y jQuery Bootstrap #}
+  {% bootstrap_javascript jquery='full' %}
+</body>
+
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {# Cargamos la librería #}
+    {% load bootstrap4 %}
+
+    {# CSS Bootstrap #}
+    {% bootstrap_css %}
+
+    {# Widget Tweaks #}
+    {% load widget_tweaks %}
+
+    {# Archivos #}
+    {% load static %} <!-- STATIC_URL -->
+
+    <meta charset="UTF-8">
+    <title>Framely</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="../../../media/icono/feliz.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
+
+    <style>
+        .profile-picture {
+            background-position: center;
+            background-size: cover;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .lead {
+            font-weight: 1.8rem;
+        }
+
+        .sugerencias-container {
+            height: 190px;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            width: 100%;
+            text-align: center;
+        }
+        .modal-footer{
+            justify-content: center;
+        }
+        .modal-body img{
+            width: 100%;
+            height: auto;
+        }
+        .col-lg-4 {
+        position: fixed;
+        top: 100px;  /* Ajusta según sea necesario para la distancia desde la parte superior */
+        right: 50px;  /* Ajusta según sea necesario para la distancia desde la derecha */
+        }
+    </style>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom ">
+        <!-- Container wrapper -->
+        <div class="container d-flex justify-content-between">
+            <!-- Left elements -->
+            <!-- Navbar brand -->
+            <a class="navbar-brand border-right pr-4 mt-2 mt-lg-0 mr-4" href="../usuarios">
+                <img src="../../../media/icono/feliz.png" height="25" alt="Friendly Logo" loading="lazy" />
+            </a>
+            <form method="POST" action="{% url 'buscar' %}" class="ml-auto d-flex">
+                {% csrf_token %}
+                <input name="buscar" class="form-control text-center mr-2" type="search" placeholder="Buscar" aria-label="Search">
+                <button class="btn btn-link text-muted" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            
+            <!-- Left elements -->
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse w-25" id="navbarSupportedContent">
+                <!--Right elements elements-->
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item mr-2">
+                        <a class="nav-link text-dark" href=""><i class="fa-solid lead fa-house mr-2"></i></a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link text-dark" data-toggle="modal" data-target="#exampleModalLong" ><i class="fa-regular lead fa-square-plus"></i></a>
+                        <!-- Modal -->
+                        <div class="modal fade text-center" id="exampleModalLong" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Crear nueva publicación</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Deseas subir una publicación?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <a href="../posts/crear"><button type="button" class="btn btn-primary">Ir</button></a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <div class="dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fa-regular lead fa-user mr-2"></i></a>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/usuarios/{{usuarioLogueado.user.id}}">Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="../logout">Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Collapsible wrapper -->
+
+            <!-- Username -->
+            <div class="d-flex align-items-center">
+                <div class="navbar-text text-dark">
+                    {{ usuarioLogueado.username }}
+                </div>
+
+            </div>
+            <!-- Username -->
+
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+    {% csrf_token %}
+    <!-- Start Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                {% if vacio %}
+                <div class="col-lg-8">
+                    <div class="card mb-5">
+                        <div class="card-body d-flex">
+                            <div class="d-flex flex-grow-1">
+                                <p class="d-block text-dark text-decoration-none font-weight-bold">Nigún post coincide con la búsqueda</p>
+                    </div>
+                </div>
+                </div>
+                </div>
+                    {% endif %}
+                {% for usuario in usuarios %}
+                {% for post, like, posteador in zipped_data %}
+                <!--Start Card-->
+                <div class="col-lg-8">
+                    <div class="card mb-5">
+                        <div class="card-body d-flex">
+                            <div class="d-flex flex-grow-1">
+                                <img class="profile-picture rounded-circle mr-3" src="{{posteador.foto_perfil.url}}" alt="">
+                                <a href="/usuarios/{{posteador.user.id}}" class="text-dark text-decoration-none font-weight-bold align-self-center">
+                                    {{ posteador.username }}</a>
+                                <!--Se debe cambiar para traer todos los posts de los usuarios-->
+                            </div>
+                            <div class="align-self-center ">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </div>
+                        </div>
+                        <img class="card-img-bottom img-fluid" height="100%"
+                            src="{{post.foto_video.url}}">
+                        
+                        <div class="card-body">
+                            <div class="d-flex">
+                                {% if post not in likesUsuario %}
+                                <div>
+                                    <form method="POST" action="../posts/like/{{post.id}}" class="ml-auto">
+                                        <button class="btn btn text-decoration-none" onclick="return like();"
+                                                type="submit"><i class="fa-regular lead fa-heart mr-2"></i>{{like}} likes
+                                            </button>
+                                            {% csrf_token %}
+                                </div>
+                                {% elif post in likesUsuario %}
+                                <div>
+                                <form method="POST" action="../posts/unlike/{{post.id}}" class="ml-auto">
+                                    {% csrf_token %}
+                                    <button class="btn btn text-decoration-none" onclick="return unlike();"
+                                            type="submit"><i class="fa-solid lead fa-heart mr-2"></i>{{like}} likes
+                                        </button>
+                                        </div>  
+                                </form>
+                                {% endif %}
+                            </div>
+                            <a class="card-text"  href="../posts/listaLikes/{{post.id}}"><span class="font-weight-bold">Ver likes</a>
+                            <p class="card-text"><span class="font-weight-bold">{{ posteador.username }}</span>
+                                {{post.descripcion}}</p>
+                            <small class="d-block text-muted text-uppercase">{{post.created}} </small>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+                <!--Finish Card-->
+                <!--Start Column Right-->
+                <div class="col-lg-4">
+                    <div class="d-flex">
+                        <div class="profile-picture rounded-circle mr-3">
+                            <img class="profile-picture rounded-circle mr-3" src="{{usuarioLogueado.foto_perfil.url}}" alt="">
+                        </div>
+                        <div class="mb-3">
+                            <a href="/usuarios/{{usuarioLogueado.user.id}}" class="d-block text-dark text-decoration-none font-weight-bold mb-0">
+                                {{ usuarioLogueado.user.username }}</a>
+                            <small class="text-muted">{{ usuarioLogueado.user.first_name }}</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="text-muted font-weight-bold flex-grow-1">Usuarios</p>
+                            </div>
+
+                            <div class="sugerencias-container">
+                                {%if usuarios|length == 0%}
+                                <div class="d-flex mb-3">
+                                    <p  class="d-block text-dark text-decoration-none font-weight-bold">Nigún usuario coincide con la busqueda</p>
+                                </div>
+                                {% endif %}
+                                {% for usuario in usuarios %}
+                                <div class="d-flex mb-3">
+                                    <div class="profile-picture rounded-circle mr-3"></div>
+                                    <div>
+                                        <img class="profile-picture rounded-circle " src="{{usuario.foto_perfil.url}}" alt="">
+                                        <a href="/usuarios/{{usuario.user.id}}" class="d-block text-dark text-decoration-none font-weight-bold">
+                                            {{usuario.user.username}}</a>
+                                        <small class="text-muted">Usuario de Framely</small>
+                                    </div>
+                                    {% if usuario.user != usuarioLogueado.user %}
+                                    {% if usuario.user not in siguiendo %}
+                                    <div class="d-flex flex-grow-1">
+                                        <form method="POST" action="../usuarios/seguir/{{usuario.id}}" class="ml-auto">
+                                            <button class="btn btn-link text-decoration-none" onclick="return follow();"
+                                                type="submit"><i class="fa-solid fa-user-plus"></i>
+                                            </button>
+                                            {% csrf_token %}
+                                        </form>
+                                        {% elif usuario.user in siguiendo %}
+                                        <form method="POST" action="../usuarios/unfollow/{{usuario.id}}" class="ml-auto">
+                                            {% csrf_token %}
+                                            <button class="btn btn-link text-decoration-none btn-bottom-right"
+                                                onclick="return unfollow();" type="submit"><i
+                                                    class="fa-solid fa-user-minus"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Finish Column Right-->
+            </div>
+        </div>
+    </section>
+    <!--Finish Section-->
+    {# JS y jQuery Bootstrap #}
+    {% bootstrap_javascript jquery='full' %}

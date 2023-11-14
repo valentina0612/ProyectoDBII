@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {# Cargamos la librería #}
+    {% load bootstrap4 %}
+
+    {# CSS Bootstrap #}
+    {% bootstrap_css %}
+
+    {# Widget Tweaks #}
+    {% load widget_tweaks %}
+
+    {# Archivos #}
+    {% load static %} <!-- STATIC_URL -->
+
+    <meta charset="UTF-8">
+    <title>Friendly</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="../../../media/icono/feliz.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
+
+    <style>
+        .profile-picture {
+            background-image: url(../../../media/icono/userpost.png);
+            background-position: center;
+            background-size: cover;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .lead {
+            font-weight: 1.8rem;
+        }
+
+        .sugerencias-container {
+            height: 190px;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            width: 100%;
+            text-align: center;
+        }
+        .modal-footer{
+            justify-content: center;
+        }
+        .modal-body img{
+            width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom ">
+        <!-- Container wrapper -->
+        <div class="container d-flex justify-content-between">
+
+            <!-- Left elements -->
+            <!-- Navbar brand -->
+            <a class="navbar-brand border-right pr-4 mt-2 mt-lg-0 mr-4" href="#">
+                <img src="../../../media/icono/feliz.png" height="25" alt="Friendly Logo" loading="lazy" />
+            </a>
+            <form class="d-flex">
+                <input class="form-control text-center mr-2" type="search" placeholder="Buscar..." aria-label="Search">
+                <button class="btn btn-link text-muted position-absolute " type="submit"><i
+                        class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <!-- Left elements -->
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse w-25" id="navbarSupportedContent">
+                <!--Right elements elements-->
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item mr-2">
+                        <a class="nav-link text-dark" href="#"><i class="fa-solid lead fa-house mr-2"></i></a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link text-dark" href="/usuarios"><i class="fa-regular lead fa-compass mr-2"></i></a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link text-dark" href="#" data-toggle="modal" data-target="#exampleModalLong"><i
+                                class="fa-regular lead fa-square-plus"></i></a>
+                        <!-- Modal -->
+                        <div class="modal fade text-center" id="exampleModalLong" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Crear nueva publicación</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="../../../media/icono/galeria-de-fotos-color.gif" alt="Galeria de fotos">
+                                        ¿Deseas subir alguna publicación?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cerrar</button>
+                                        <button type="button" class="btn btn-primary"><a class="text-light text-decoration-none" href="../posts/crear">Ir</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <div class="dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fa-regular lead fa-user mr-2"></i></a>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/usuarios/{{usuarioLogueado.user.id}}">Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="../logout">Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Collapsible wrapper -->
+
+            <!-- Username -->
+            <div class="d-flex align-items-center">
+                <div class="navbar-text text-dark">
+                    {{ usuarioLogueado.user.username }}
+                </div>
+
+            </div>
+            <!-- Username -->
+
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+    {% csrf_token %}
+    <!-- Start Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!--Start Card-->
+                <div class="col-lg-8">
+                    <div class="card mb-5">
+                        <div class="card-body d-flex">
+                            <div class="d-flex flex-grow-1">
+                                <div class="profile-picture rounded-circle mr-3"></div>
+                                <a href="#" class="text-dark text-decoration-none font-weight-bold align-self-center">
+                                    {{ usuarioLogueado.user.first_name }}</a>
+                                <!--Se debe cambiar para traer todos los posts de los usuarios-->
+                            </div>
+                            <div class="align-self-center ">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </div>
+                        </div>
+                        <img class="card-img-bottom img-fluid" height="100%"
+                            src="../../../media/posts/ensalada-de-salmon-ahumado-mango-y-aguacate-foto-principal.jpg">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div>
+                                    <i class="fa-regular lead fa-heart mr-2"></i>
+                                    <i class="fa-regular lead fa-comment mr-2"></i>
+                                    <i class="fa-regular lead fa-paper-plane"></i>
+                                </div>
+                            </div>
+                            <p class="font-weight-bold">39 Me gusta</p>
+                            <p><a href="#" class="text-dark font-weight-bold text-decoration-none mr-2">
+                                    {{ usuarioLogueado.user.username }}</a>Comentario usuario</p>
+                            <small class="d-block text-muted text-uppercase">Hace 8 horas</small>
+                        </div>
+                        <div class="d-flex border-top py-2 px-2">
+                            <input type="text" class="form-control border-0 " placeholder="Agregar un comentario...">
+                            <button type="submit"
+                                class="btn btn-link font-weight-bold text-decoration-none">Publicar</button>
+                        </div>
+                    </div>
+                </div>
+                <!--Finish Card-->
+                <!--Start Column Right-->
+                <div class="col-lg-4">
+                    <div class="d-flex">
+                        <div class="profile-picture rounded-circle mr-3"></div>
+                        <div class="mb-3">
+                            <a href="#" class="d-block text-dark text-decoration-none font-weight-bold mb-0">
+                                {{ usuarioLogueado.user.username }}</a>
+                            <small class="text-muted">{{ usuarioLogueado.user.first_name }}</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="text-muted font-weight-bold flex-grow-1">Sugerencias para ti</p>
+                                <small class="font-weight-bold "><a href="#" class="text-decoration-none">Ver
+                                        todo</a></small>
+                            </div>
+
+                            <div class="sugerencias-container">
+                                {% for usuario in usuarios %}
+                                <div class="d-flex mb-3">
+                                    <div class="profile-picture rounded-circle mr-3"></div>
+                                    <div>
+                                        <a href="#" class="d-block text-dark text-decoration-none font-weight-bold">
+                                            {{usuario.user.username}}</a>
+                                        <small class="text-muted">Nuevo en Friendly</small>
+                                    </div>
+                                    {% if usuario.user not in siguiendo %}
+                                    <div class="d-flex flex-grow-1">
+                                        <form method="POST" action="seguir/{{usuario.id}}" class="ml-auto">
+                                            <button class="btn btn-link text-decoration-none" onclick="return follow();"
+                                                type="submit"><i class="fa-solid fa-user-plus"></i>
+                                            </button>
+                                            {% csrf_token %}
+                                        </form>
+                                        {% elif usuario.user in siguiendo %}
+                                        <form method="POST" action="unfollow/{{usuario.id}}" class="ml-auto">
+                                            {% csrf_token %}
+                                            <button class="btn btn-link text-decoration-none btn-bottom-right"
+                                                onclick="return unfollow();" type="submit"><i
+                                                    class="fa-solid fa-user-minus"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Finish Column Right-->
+            </div>
+        </div>
+    </section>
+    <!--Finish Section-->
+    {# JS y jQuery Bootstrap #}
+    {% bootstrap_javascript jquery='full' %}

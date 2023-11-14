@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {# Cargamos la librería #}
+    {% load bootstrap4 %}
+
+    {# CSS Bootstrap #}
+    {% bootstrap_css %}
+
+    {# Widget Tweaks #}
+    {% load widget_tweaks %}
+
+    {# Archivos #}
+    {% load static %} <!-- STATIC_URL -->
+    <title>Registrarte · Framely</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
+    <link rel="shortcut icon" href="../../../media/icono/feliz.png" type="image/x-icon">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cookie&family=League+Spartan:wght@300&display=swap');
+
+        :root {
+            --purple: #7930ad;
+            --dark-x: #431c5f;
+            --light: #ffffff;
+        }
+
+        body {
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: var(--light);
+            letter-spacing: .05rem;
+            overflow: hidden;
+        }
+
+        .bg-purple {
+            background-color: var(--purple) !important;
+        }
+
+        .bg-light {
+            background-color: var(--light) !important;
+        }
+
+        .bg-dark-x {
+            background-color: var(--dark-x);
+        }
+
+        .form-control,
+        .btn {
+            min-height: 3.125rem;
+            line-height: initial;
+        }
+
+        .img-1 {
+            background-image: url(../../../media/icono/happymorado.png);
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+
+<body class="bg-purple">
+    <section>
+        <div class="row no-gutters">
+            <div class="col-xl-5 col-lg-12">
+                <div class="img-1 min-vh-100"></div>
+            </div>
+            <div class="col-xl-7 col-lg-12 d-flex">
+                <div class="container align-self-center">
+                    <h1 class="font-weight-bold text-center">Framely</h1>
+                    <p class="mt-2 mb-4">¡Únete a nuestra comunidad! Crea tu cuenta y empieza a explorar.</p>
+                    <!-- Pasamos el 'csrf_token' de seguridad para poder crear un nuevo registro -->
+                    {% block content %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-row mb-3">
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">Nombre</label>
+                                {{ form.first_name|add_class:'form-control bg-dark-x text-muted border-0'|attr:"placeholder:Ingresa tu nombre" }}
+                                {% if form.first_name.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in form.first_name.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">Apellido</label>
+                                {{ form.last_name|add_class:'form-control bg-dark-x text-muted border-0'|attr:"placeholder:Ingresa tu apellido" }}
+                                {% if form.last_name.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in form.last_name.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">Usuario</label>
+                                {{ form.username |add_class:'form-control bg-dark-x text-muted border-0'|attr:"placeholder:Ingresa tu usuario" }}
+                                {% if form.username.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.username.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">Email</label>
+                                {{ form.email|add_class:'form-control bg-dark-x text-muted border-0'|attr:"placeholder:Ingresa tu email"}}
+                                {% if form.email.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in form.email.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">Contraseña</label>
+                                {{ form.password1 |add_class:'form-control bg-dark-x text-muted border-0'|attr:"placeholder:Ingresa tu contraseña"}}
+                                {% if form.password1.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in form.password1.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">Confirmar Contraseña</label>
+                                {{ form.password2 |add_class:'form-control bg-dark-x text-muted border-0'|attr:"placeholder:Ingresa tu contraseña" }}
+                                {% if form.password2.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in form.password2.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 font-weight-bold mb-3">Registrarte</button>
+                    </form>
+                    {% endblock content %}
+                    <div class="text-center w-100">
+                        <small class="d-inline-block">¿Tienes una cuenta? <a href="/login"
+                                class="text-decoration-none text-light font-weight-bold">Entra</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {# JS y jQuery Bootstrap #}
+    {% bootstrap_javascript jquery='full' %}
+</body>
+<html>
